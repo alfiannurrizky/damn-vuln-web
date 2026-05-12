@@ -1,0 +1,40 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+frontend/dist/
+frontend/dist-ssr/
+frontend/public/.env
+backend/.env
+backend/node_modules/
+frontend/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Uploaded files in backend (except .gitkeep)
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+# Nginx config
+*.conf
+
+# NOTE: .env files are intentionally NOT ignored in this project 
+# because they contain dummy data used for the Sensitive Data Exposure lab.

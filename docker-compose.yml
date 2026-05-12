@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: vuln-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: vuln_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - vuln-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vuln-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=root123
+      - DB_NAME=vuln_db
+      - JWT_SECRET=supersecretjwtkey
+    volumes:
+      - ./backend/public/uploads:/app/public/uploads
+    networks:
+      - vuln-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vuln-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - vuln-net
+
+networks:
+  vuln-net:
+    driver: bridge
