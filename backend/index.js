@@ -9,6 +9,8 @@ require('dotenv').config(); // Load .env from backend root
 const app = express();
 const port = 3000;
 
+app.set('etag', false); // Disable caching for easier pentesting in BurpSuite
+
 app.use(cors());
 app.use(express.json());
 
