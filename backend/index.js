@@ -193,17 +193,11 @@ app.post('/api/upload', verifyToken, upload.single('avatar'), (req, res) => {
 
 // 7. SEARCH EMPLOYEES
 // VULNERABLE: SQL Injection (UNION based)
-app.get('/api/search', verifyToken, (req, res) => {
+app.get('/api/search', (req, res) => {
     const q = req.query.q || '';
-    const userRole = req.authData.user.role;
-    const userId = req.authData.user.id;
     
     // Vulnerable raw query
     let query = `SELECT id, username, email, role FROM users WHERE username LIKE '%${q}%'`;
-    
-    if (userRole !== 'admin') {
-        query += ` AND id = ${userId}`;
-    }
     
     db.query(query, (err, results) => {
         if (err) {
