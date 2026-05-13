@@ -159,9 +159,9 @@ app.put('/api/users/:id', verifyToken, (req, res) => {
     const id = req.params.id;
     const { username, phone, address } = req.body;
     
-    const query = `UPDATE users SET username='${username}', phone='${phone}', address='${address}' WHERE id=${id}`;
+    const query = `UPDATE users SET username=?, phone=?, address=? WHERE id=?`;
     
-    db.query(query, (err, results) => {
+    db.query(query, [username, phone, address, id], (err, results) => {
         if (err) {
             console.error("Error in update profile:", err.message);
             console.error("Query was:", query);
