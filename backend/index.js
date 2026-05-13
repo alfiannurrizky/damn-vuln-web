@@ -11,7 +11,7 @@ const port = 3000;
 
 app.set('etag', false); // Disable caching for easier pentesting in BurpSuite
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // Serve static files from 'public' directory
