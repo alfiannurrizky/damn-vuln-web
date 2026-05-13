@@ -163,7 +163,9 @@ app.put('/api/users/:id', verifyToken, (req, res) => {
     
     db.query(query, (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, message: 'Error updating profile' });
+            console.error("Error in update profile:", err.message);
+            console.error("Query was:", query);
+            return res.status(500).json({ success: false, message: 'Error updating profile', error: err.message });
         }
         res.json({ success: true, message: 'Profile updated successfully' });
     });
