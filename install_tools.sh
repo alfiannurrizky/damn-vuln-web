@@ -8,31 +8,35 @@ sudo apt update
 sudo apt install -y ca-certificates curl wget unzip
 sudo apt install -y dirsearch sqlmap
 
-echo "[*] Installing Docker..."
-# Add Docker's official GPG key:
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+if ! command -v docker &> /dev/null; then
+    echo "[*] Installing Docker..."
+    # Add Docker's official GPG key:
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-# Add the repository to Apt sources:
-sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<EOF
+    # Add the repository to Apt sources:
+    sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/ubuntu
-Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Suites: \$(. /etc/os-release && echo "\${UBUNTU_CODENAME:-\$VERSION_CODENAME}")
 Components: stable
-Architectures: $(dpkg --print-architecture)
+Architectures: \$(dpkg --print-architecture)
 Signed-By: /etc/apt/keyrings/docker.asc
 EOF
 
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-echo "[*] Ensuring Docker service is running..."
-sudo systemctl enable docker
-sudo systemctl start docker
+    echo "[*] Ensuring Docker service is running..."
+    sudo systemctl enable docker
+    sudo systemctl start docker
 
-# Optional: Add current user to docker group (requires logout/login to take effect fully)
-sudo usermod -aG docker $USER
+    # Optional: Add current user to docker group (requires logout/login to take effect fully)
+    sudo usermod -aG docker \$USER
+else
+    echo "[*] Docker is already installed. Skipping Docker installation."
+fi
 
 echo "[*] Installing Golang..."
 # Menggunakan versi 1.22.3 karena 1.26.3 belum rilis (mencegah error 404 Not Found)
@@ -56,8 +60,14 @@ go version
 echo "[*] Installing Nuclei..."
 go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
 
+echo "[*] Copying Nuclei binary to /usr/bin..."
+sudo cp \$HOME/go/bin/nuclei /usr/bin/nuclei
+
 echo "[*] Verifying Nuclei installation..."
 nuclei -version
+
+echo "[*] Updating Nuclei templates..."
+nuclei -update-templates
 
 echo "[*] Setting up WPScan via Docker..."
 # Pull image docker wpscan
