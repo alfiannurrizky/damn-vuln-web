@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto mt-8">
-    <h1 class="text-3xl font-bold mb-4 text-gray-800">Welcome to Employee Portal</h1>
+    <h1 class="text-3xl font-bold mb-4 text-gray-800">Welcome, {{ user.username || 'Employee' }}</h1>
     <p class="text-gray-600 mb-8">This portal allows you to manage your profile and view employee information.</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
