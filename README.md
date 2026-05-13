@@ -59,7 +59,8 @@ docker compose up --build
 
 **Exploit (Search UNION)**:
 1. Go to Employee Directory.
-2. In the search box, enter `' UNION SELECT 1, @@version, 3, 4 -- ` to leak the database version.
+2. In the search box, enter `TIDAKADA' UNION SELECT 1, @@version, 3, 4 -- -` to leak the database version.
+   *(Note: The string `TIDAKADA` ensures the original query returns empty, and `-- -` ensures the trailing space is not trimmed by the browser).*
 
 ### 5. Sensitive Data Exposure
 **Scenario**: The frontend serves the `public/` directory statically, which accidentally contains the `.env` file.
